@@ -1,7 +1,7 @@
 <!doctype html><html lang="id"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Catat Uang</title><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png">
-<meta name="theme-color" content="#ffffff"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Catat Uang">
+<title>Arta</title><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png">
+<meta name="theme-color" content="#ffffff"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Arta">
 <style>
 :root{--a:#4f7cff;--b:#9b5cff;--g:linear-gradient(135deg,#4f7cff,#9b5cff);--t:#1b1f3b;--m:#7a809e;--in:#12b886;--ex:#f0587a}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -27,7 +27,7 @@ nav{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-b
 nav button{border:0;background:none;font:12px inherit;color:var(--m);flex:1;height:100%}nav button.on{color:var(--a);font-weight:700}
 nav .fab{flex:none;width:64px;height:64px;margin-top:-26px;border-radius:50%;background:var(--g);color:#fff;font-size:32px;box-shadow:0 10px 24px rgba(111,92,255,.45)}
 .ov{position:fixed;inset:0;background:rgba(27,31,59,.35);z-index:9;display:flex;align-items:flex-end;animation:fade .2s}
-.sheet{background:#fff;width:100%;max-height:92vh;overflow:auto;border-radius:26px 26px 0 0;padding:18px 16px calc(24px + env(safe-area-inset-bottom));animation:sl .3s}
+.sheet{background:#fff;width:100%;max-height:92vh;overflow:auto;border-radius:26px 26px 0 0;padding:10px 16px calc(24px + env(safe-area-inset-bottom));overscroll-behavior:contain}
 @keyframes sl{from{transform:translateY(100%)}}@keyframes fade{from{opacity:0}}
 .seg{display:grid;grid-template-columns:1fr 1fr;background:#eef1fd;border-radius:14px;padding:4px}.seg button{border:0;background:none;padding:12px;border-radius:11px;font:600 15px inherit;color:var(--m)}.seg .on{background:#fff;color:var(--t);box-shadow:0 2px 8px rgba(0,0,0,.08)}
 .amt{font-size:30px!important;font-weight:700;text-align:center}.wr{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
@@ -45,10 +45,19 @@ input,select{font-size:16px;max-width:100%;min-width:0}input[type=date]{-webkit-
 nav .fab{display:none}nav button{min-width:0}
 .fab{position:fixed;right:18px;bottom:calc(88px + env(safe-area-inset-bottom));width:58px;height:58px;border:0;border-radius:50%;background:var(--g);color:#fff;font-size:32px;line-height:1;box-shadow:0 10px 24px rgba(111,92,255,.45);z-index:6;transition:transform .15s}.fab:active{transform:scale(.92)}
 body[data-v=set] .fab{display:none}
+.ov.n .sheet{animation:sl .3s}.gr{width:42px;height:5px;border-radius:9px;background:#d9dcf0;margin:0 auto 14px}
+body.lock{position:fixed;left:0;right:0;overflow:hidden}
+.fab{display:flex;align-items:center;justify-content:center;padding:0}
+header h1{font-size:26px;letter-spacing:-.8px;background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent;width:max-content}
+body[data-v=login] nav,body[data-v=login] .fab,body[data-v=login] header{display:none}
+.lg{min-height:88vh;display:flex;flex-direction:column;justify-content:center;text-align:center;padding-top:4vh}
+.lm{width:76px;height:76px;margin:0 auto 18px;border-radius:24px;background:var(--g);display:grid;place-items:center;box-shadow:0 16px 36px rgba(111,92,255,.4);animation:fl 4s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-7px)}}
+.lg h2{font-size:42px;letter-spacing:-1.5px;margin:0;background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent;width:max-content;margin:0 auto}
+.tg{color:var(--m);margin:8px 0 26px;font-size:16px}.gl{text-align:left;padding:20px}.gl label{font-size:12px;font-weight:600;color:var(--m);text-transform:uppercase;letter-spacing:.5px}.gl .btn{margin-top:16px}
 </style></head><body>
-<header><h1>Catat Uang</h1><div><button class=ib onclick="load()" title="Muat ulang">⟳</button><button class=ib onclick="out()" title="Putuskan koneksi">⏻</button></div></header>
+<header><h1>Arta</h1><div><button class=ib onclick="load()" title="Muat ulang">⟳</button><button class=ib onclick="out()" title="Putuskan koneksi">⏻</button></div></header>
 <main id=main></main>
-<nav><button id=n1 onclick="go('home')">◉<br>Beranda</button><button id=n2 onclick="go('hist')">☰<br>Riwayat</button><button id=n3 onclick="go('set')">⚙<br>Pengaturan</button></nav><button class="fab" onclick="openForm()" aria-label="Tambah Transaksi">+</button>
+<nav><button id=n1 onclick="go('home')">◉<br>Beranda</button><button id=n2 onclick="go('hist')">☰<br>Riwayat</button><button id=n3 onclick="go('set')">⚙<br>Pengaturan</button></nav><button class="fab" onclick="openForm()" aria-label="Tambah Transaksi"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
 <script>
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),rp=n=>'Rp '+Math.round(n).toLocaleString('id-ID');
 let D,cfg=JSON.parse(localStorage.cfg||'null'),F={m:'gaji',pi:0,from:'',to:''},H={q:'',c:'',f:'',t:''},V='home',f=null,busy=0;
@@ -101,21 +110,25 @@ function sett(){const gs=[...new Set(D.exp.map(x=>x[1]))];return`<div class=card
 async function saveBud(){const it=[];document.querySelectorAll('.bi').forEach(e=>{const v=+e.value.replace(/\D/g,'')||0,r=D.exp.find(x=>x[0]===e.dataset.n);if(r&&(+r[2]||0)!==v)it.push([r[0],v])});
  if(!it.length)return toast('Belum ada perubahan',0);const b=$('#sbb');b.disabled=1;b.textContent='Menyimpan…';
  try{await api('bud',{items:it});it.forEach(([n,v])=>{D.exp.find(x=>x[0]===n)[2]=v});cs();render();toast('Anggaran tersimpan ✓')}catch(x){b.disabled=0;b.textContent='Simpan Anggaran';toast('Gagal menyimpan: '+x.message,0)}}
-function render(){const m=$('#main');document.body.dataset.v=V;$('#n1').className=V==='home'?'on':'';$('#n2').className=V==='hist'?'on':'';$('#n3').className=V==='set'?'on':'';
+function render(){const m=$('#main');document.body.dataset.v=cfg?V:'login';$('#n1').className=V==='home'?'on':'';$('#n2').className=V==='hist'?'on':'';$('#n3').className=V==='set'?'on':'';
  if(!cfg)return setup();if(!D){m.innerHTML='<div class=sk></div><div class=sk></div><div class=sk></div>';return}
  m.innerHTML=V==='home'?filters()+home():V==='hist'?hist():sett();if(V==='hist')hl();document.querySelectorAll('.trs').forEach(e=>e.scrollLeft=e.scrollWidth)}
 function go(v){V=v;render();scrollTo(0,0)}
-function setup(){$('#main').innerHTML=`<div class=card><h2>Sambungkan ke Google Sheets</h2><p class=mu>Diisi sekali saja. Disimpan hanya di HP ini.</p><input id=su placeholder="URL Web App (https://script.google.com/...)" autocapitalize=off><input id=sk type=password placeholder="Kunci rahasia"><button class=btn onclick="conn()">Sambungkan</button></div>`}
-async function conn(){cfg={url:$('#su').value.trim(),key:$('#sk').value.trim()};try{D=await api('init');localStorage.cfg=JSON.stringify(cfg);prep();cs();render();toast('Terhubung ✓')}catch(x){cfg=null;D=null;toast('Gagal: '+x.message,0)}}
+function setup(){$('#main').innerHTML=`<div class=lg><div class=lm><svg viewBox="0 0 24 24" width=36 height=36 fill=none stroke=#fff stroke-width=2.2 stroke-linecap=round stroke-linejoin=round><path d="M4 17l5-6 4 4 7-9"/><path d="M15 6h5v5"/></svg></div><h2>Arta</h2><p class=tg>Catat dalam hitungan detik.<br>Pantau arus uangmu di mana saja.</p><div class="card gl"><label>Tautan server</label><input id=su placeholder="https://script.google.com/…/exec" autocapitalize=off autocorrect=off spellcheck=false inputmode=url><label>Kunci akses</label><input id=sk type=password placeholder="Kunci rahasia kamu"><button class=btn onclick="conn()">Masuk</button><p class=mu style="text-align:center;margin:14px 0 0">🔒 Tersimpan hanya di perangkat ini</p></div></div>`}
+async function conn(){cfg={url:$('#su').value.trim(),key:$('#sk').value.trim()};try{D=await api('init');localStorage.cfg=JSON.stringify(cfg);prep();cs();render();toast('Selamat datang 👋')}catch(x){cfg=null;D=null;toast('Gagal masuk: '+x.message,0)}}
 async function load(){if(!cfg)return;try{D=await api('init');prep();cs();render()}catch(x){toast('Gagal memuat: '+x.message,0);if(!D)$('#main').innerHTML='<div class="card em"><b>📡</b>Tidak bisa terhubung.<br><button class=btn onclick="load()">Coba lagi</button></div>'}}
 function out(){if(confirm('Putuskan koneksi di HP ini? (Data di spreadsheet tidak terhapus)')){localStorage.clear();location.reload()}}
 function sync(){if(!$('#fa'))return;f.amt=+$('#fa').value.replace(/\D/g,'')||0;f.desc=$('#fd').value;f.date=$('#fdt').value;f.note=$('#fn').value;if($('#fs'))f.sav=$('#fs').value;if($('#fc'))f.cat=$('#fc').value}
 function pick(k,v){sync();f[k]=v;if(k==='type'){f.cat='';f.sav=''}rf()}
-function openForm(id){f=id?{...D.tx.find(t=>t.id===id)}:{type:'Pengeluaran',amt:0,cat:'',desc:'',date:today(),method:localStorage.lm||D.met[0]||'',note:'',sav:''};document.body.classList.add('lock');rf(!id)}
+let sy=0;const lockB=()=>{if(document.body.classList.contains('lock'))return;sy=scrollY;document.body.classList.add('lock');document.body.style.top=-sy+'px'},unlockB=()=>{if(!document.body.classList.contains('lock'))return;document.body.classList.remove('lock');document.body.style.top='';scrollTo(0,sy)};
+function openForm(id){f=id?{...D.tx.find(t=>t.id===id)}:{type:'Pengeluaran',amt:0,cat:'',desc:'',date:today(),method:localStorage.lm||D.met[0]||'',note:'',sav:''};lockB();rf(!id)}
 function rf(foc){sync();const fr={};D.tx.forEach(t=>fr[t.cat]=(fr[t.cat]||0)+1);const L=(f.type==='Pemasukan'?D.inc:D.exp).map(x=>x[0]).sort((x,y)=>(fr[y]||0)-(fr[x]||0)),ds=[...new Set(D.tx.filter(t=>t.cat===f.cat).map(t=>t.desc))].slice(-40);
- let o=$('#ov');if(!o){o=document.createElement('div');o.id='ov';o.className='ov';o.onclick=e=>{if(e.target===o)closeForm()};document.body.append(o)}
+ let o=$('#ov');if(!o){o=document.createElement('div');o.id='ov';o.className='ov n';o.onclick=e=>{if(e.target===o)closeForm()};document.body.append(o);setTimeout(()=>o.classList.remove('n'),400);let ty=0,dy=0,dg=0;
+  o.addEventListener('touchstart',e=>{const s=o.firstElementChild;dg=s&&s.scrollTop<=0?1:0;ty=e.touches[0].clientY;dy=0},{passive:true});
+  o.addEventListener('touchmove',e=>{const s=o.firstElementChild;if(!dg||!s)return;dy=e.touches[0].clientY-ty;if(dy>0){s.style.transition='none';s.style.transform=`translateY(${dy}px)`;e.preventDefault()}else dy=0},{passive:false});
+  o.addEventListener('touchend',()=>{const s=o.firstElementChild;if(!s||!dg)return;dg=0;s.style.transition='transform .25s';if(dy>110){s.style.transform='translateY(100%)';setTimeout(closeForm,220)}else s.style.transform=''})}
  const A=f.type==='Pemasukan'?D.inc:D.exp,op=n=>`<option ${f.cat===n?'selected':''}>${esc(n)}</option>`;const ch=(k,v)=>`<button class="ch ${f[k]===v?'on':''}" onclick="pick('${k}',this.dataset.v)" data-v="${esc(v)}">${esc(v)}</button>`;
- o.innerHTML=`<div class=sheet><div class=seg>${['Pengeluaran','Pemasukan'].map(x=>`<button class="${f.type===x?'on':''}" onclick="pick('type','${x}')">${x}</button>`).join('')}</div>
+ o.innerHTML=`<div class=sheet><div class=gr></div><div class=seg>${['Pengeluaran','Pemasukan'].map(x=>`<button class="${f.type===x?'on':''}" onclick="pick('type','${x}')">${x}</button>`).join('')}</div>
 <input id=fa class=amt inputmode=numeric placeholder="Rp 0" value="${f.amt?f.amt.toLocaleString('id-ID'):''}" oninput="this.value=this.value.replace(/\\D/g,'').replace(/\\B(?=(\\d{3})+(?!\\d))/g,'.')">
 <select id=fc onchange="pick('cat',this.value)"><option value="">Pilih kategori…</option><optgroup label="Sering dipakai">${L.slice(0,4).map(op).join('')}</optgroup>${[...new Set(A.map(x=>x[1]))].map(g=>`<optgroup label="${esc(g||'Lainnya')}">${A.filter(x=>x[1]===g).map(x=>op(x[0])).join('')}</optgroup>`).join('')}</select>
 <input id=fd list=dl placeholder="Deskripsi (wajib)" value="${esc(f.desc)}"><datalist id=dl>${ds.map(d=>`<option value="${esc(d)}">`).join('')}</datalist>
@@ -124,7 +137,7 @@ function rf(foc){sync();const fr={};D.tx.forEach(t=>fr[t.cat]=(fr[t.cat]||0)+1);
 ${f.type==='Pengeluaran'&&D.sv.length?`<select id=fs><option value="">Dibayar dari tabungan? (tidak)</option>${D.sv.map(s=>`<option ${f.sav===s?'selected':''}>${esc(s)}</option>`).join('')}</select>`:''}
 <button class=btn id=sb onclick="save()">${f.id?'Simpan Perubahan':'Simpan'}</button><button class="btn c" onclick="closeForm()">Batal</button>${f.id?'<button class="btn d" onclick="del()">Hapus Transaksi</button>':''}</div>`;
  if(foc)$('#fa').focus()}
-function closeForm(){$('#ov')?.remove();document.body.classList.remove('lock')}
+function closeForm(){$('#ov')?.remove();unlockB()}
 async function save(){sync();const e=!(f.amt>0)?'Nominal harus lebih dari 0':!f.cat?'Pilih kategori':!f.desc.trim()?'Deskripsi wajib diisi':!f.date?'Tanggal wajib diisi':'';if(e)return toast(e,0);
  const b=$('#sb');b.disabled=1;b.textContent='Menyimpan…';
  try{if(f.id){await api('upd',{id:f.id,t:f});D.tx=D.tx.map(t=>t.id===f.id?{...f}:t)}else{const j=await api('add',{t:f});D.tx.push({...f,id:j.id});localStorage.lm=f.method}
