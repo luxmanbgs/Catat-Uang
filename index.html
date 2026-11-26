@@ -39,10 +39,16 @@ nav .fab{flex:none;width:64px;height:64px;margin-top:-26px;border-radius:50%;bac
 .dh{display:flex;justify-content:space-between;margin:14px 0 2px;font-size:12px;font-weight:700;color:var(--m);text-transform:uppercase;letter-spacing:.4px}.dh:first-child{margin-top:0}
 .trs{overflow-x:auto;margin-top:8px}.tr2{display:flex;align-items:flex-end;gap:4px;height:130px;width:max-content;min-width:100%}.tb{width:26px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}.tb i{width:100%;background:var(--g);border-radius:4px 4px 0 0;min-height:2px}.tb small{font-size:9px;color:var(--m);margin-top:3px;white-space:nowrap}
 .btn.c{background:#fff;color:var(--m);box-shadow:none;border:1px solid #e4e8fb}nav button{font-size:11px}
+html,body{overflow-x:hidden;max-width:100%;overscroll-behavior-x:none}body{position:relative;padding-bottom:calc(150px + env(safe-area-inset-bottom))}
+input,select{font-size:16px;max-width:100%;min-width:0}input[type=date]{-webkit-appearance:none;appearance:none;display:block;width:100%;min-height:50px}
+.grid2>*,.card,.it>div:first-child{min-width:0}.it>div:first-child{overflow-wrap:anywhere}.dh{gap:8px}.card{max-width:100%}
+nav .fab{display:none}nav button{min-width:0}
+.fab{position:fixed;right:18px;bottom:calc(88px + env(safe-area-inset-bottom));width:58px;height:58px;border:0;border-radius:50%;background:var(--g);color:#fff;font-size:32px;line-height:1;box-shadow:0 10px 24px rgba(111,92,255,.45);z-index:6;transition:transform .15s}.fab:active{transform:scale(.92)}
+body[data-v=set] .fab{display:none}
 </style></head><body>
 <header><h1>Catat Uang</h1><div><button class=ib onclick="load()" title="Muat ulang">⟳</button><button class=ib onclick="out()" title="Putuskan koneksi">⏻</button></div></header>
 <main id=main></main>
-<nav><button id=n1 onclick="go('home')">◉<br>Beranda</button><button class="fab" onclick="openForm()" aria-label="Tambah Transaksi">+</button><button id=n2 onclick="go('hist')">☰<br>Riwayat</button><button id=n3 onclick="go('set')">⚙<br>Pengaturan</button></nav>
+<nav><button id=n1 onclick="go('home')">◉<br>Beranda</button><button id=n2 onclick="go('hist')">☰<br>Riwayat</button><button id=n3 onclick="go('set')">⚙<br>Pengaturan</button></nav><button class="fab" onclick="openForm()" aria-label="Tambah Transaksi">+</button>
 <script>
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),rp=n=>'Rp '+Math.round(n).toLocaleString('id-ID');
 let D,cfg=JSON.parse(localStorage.cfg||'null'),F={m:'gaji',pi:0,from:'',to:''},H={q:'',c:'',f:'',t:''},V='home',f=null,busy=0;
@@ -95,7 +101,7 @@ function sett(){const gs=[...new Set(D.exp.map(x=>x[1]))];return`<div class=card
 async function saveBud(){const it=[];document.querySelectorAll('.bi').forEach(e=>{const v=+e.value.replace(/\D/g,'')||0,r=D.exp.find(x=>x[0]===e.dataset.n);if(r&&(+r[2]||0)!==v)it.push([r[0],v])});
  if(!it.length)return toast('Belum ada perubahan',0);const b=$('#sbb');b.disabled=1;b.textContent='Menyimpan…';
  try{await api('bud',{items:it});it.forEach(([n,v])=>{D.exp.find(x=>x[0]===n)[2]=v});cs();render();toast('Anggaran tersimpan ✓')}catch(x){b.disabled=0;b.textContent='Simpan Anggaran';toast('Gagal menyimpan: '+x.message,0)}}
-function render(){const m=$('#main');$('#n1').className=V==='home'?'on':'';$('#n2').className=V==='hist'?'on':'';$('#n3').className=V==='set'?'on':'';
+function render(){const m=$('#main');document.body.dataset.v=V;$('#n1').className=V==='home'?'on':'';$('#n2').className=V==='hist'?'on':'';$('#n3').className=V==='set'?'on':'';
  if(!cfg)return setup();if(!D){m.innerHTML='<div class=sk></div><div class=sk></div><div class=sk></div>';return}
  m.innerHTML=V==='home'?filters()+home():V==='hist'?hist():sett();if(V==='hist')hl();document.querySelectorAll('.trs').forEach(e=>e.scrollLeft=e.scrollWidth)}
 function go(v){V=v;render();scrollTo(0,0)}
