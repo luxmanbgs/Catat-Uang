@@ -27,7 +27,7 @@ nav{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-b
 nav button{border:0;background:none;font:12px inherit;color:var(--m);flex:1;height:100%}nav button.on{color:var(--a);font-weight:700}
 nav .fab{flex:none;width:64px;height:64px;margin-top:-26px;border-radius:50%;background:var(--g);color:#fff;font-size:32px;box-shadow:0 10px 24px rgba(111,92,255,.45)}
 .ov{position:fixed;inset:0;background:rgba(27,31,59,.35);z-index:9;display:flex;align-items:flex-end;animation:fade .2s}
-.sheet{background:#fff;width:100%;max-height:92vh;overflow:auto;border-radius:26px 26px 0 0;padding:10px 16px calc(24px + env(safe-area-inset-bottom));overscroll-behavior:contain}
+.sheet{background:#fff;width:100%;max-height:94%;overflow:auto;border-radius:26px 26px 0 0;padding:10px 16px calc(24px + env(safe-area-inset-bottom));overscroll-behavior:contain}
 @keyframes sl{from{transform:translateY(100%)}}@keyframes fade{from{opacity:0}}
 .seg{display:grid;grid-template-columns:1fr 1fr;background:#eef1fd;border-radius:14px;padding:4px}.seg button{border:0;background:none;padding:12px;border-radius:11px;font:600 15px inherit;color:var(--m)}.seg .on{background:#fff;color:var(--t);box-shadow:0 2px 8px rgba(0,0,0,.08)}
 .amt{font-size:30px!important;font-weight:700;text-align:center}.wr{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
@@ -121,6 +121,8 @@ function out(){if(confirm('Putuskan koneksi di HP ini? (Data di spreadsheet tida
 function sync(){if(!$('#fa'))return;f.amt=+$('#fa').value.replace(/\D/g,'')||0;f.desc=$('#fd').value;f.date=$('#fdt').value;f.note=$('#fn').value;if($('#fs'))f.sav=$('#fs').value;if($('#fc'))f.cat=$('#fc').value}
 function pick(k,v){sync();f[k]=v;if(k==='type'){f.cat='';f.sav=''}rf()}
 let sy=0;const lockB=()=>{if(document.body.classList.contains('lock'))return;sy=scrollY;document.body.classList.add('lock');document.body.style.top=-sy+'px'},unlockB=()=>{if(!document.body.classList.contains('lock'))return;document.body.classList.remove('lock');document.body.style.top='';scrollTo(0,sy)};
+const fitV=()=>{const o=$('#ov');if(o&&window.visualViewport){o.style.height=visualViewport.height+'px';o.style.top=visualViewport.offsetTop+'px'}};
+if(window.visualViewport){visualViewport.addEventListener('resize',fitV);visualViewport.addEventListener('scroll',fitV)}
 function openForm(id){f=id?{...D.tx.find(t=>t.id===id)}:{type:'Pengeluaran',amt:0,cat:'',desc:'',date:today(),method:localStorage.lm||D.met[0]||'',note:'',sav:''};lockB();rf(!id)}
 function rf(foc){sync();const fr={};D.tx.forEach(t=>fr[t.cat]=(fr[t.cat]||0)+1);const L=(f.type==='Pemasukan'?D.inc:D.exp).map(x=>x[0]).sort((x,y)=>(fr[y]||0)-(fr[x]||0)),ds=[...new Set(D.tx.filter(t=>t.cat===f.cat).map(t=>t.desc))].slice(-40);
  let o=$('#ov');if(!o){o=document.createElement('div');o.id='ov';o.className='ov n';o.onclick=e=>{if(e.target===o)closeForm()};document.body.append(o);setTimeout(()=>o.classList.remove('n'),400);let ty=0,dy=0,dg=0;
@@ -136,7 +138,7 @@ function rf(foc){sync();const fr={};D.tx.forEach(t=>fr[t.cat]=(fr[t.cat]||0)+1);
 <input id=fdt type=date value="${f.date}"><input id=fn placeholder="Catatan (opsional)" value="${esc(f.note)}">
 ${f.type==='Pengeluaran'&&D.sv.length?`<select id=fs><option value="">Dibayar dari tabungan? (tidak)</option>${D.sv.map(s=>`<option ${f.sav===s?'selected':''}>${esc(s)}</option>`).join('')}</select>`:''}
 <button class=btn id=sb onclick="save()">${f.id?'Simpan Perubahan':'Simpan'}</button><button class="btn c" onclick="closeForm()">Batal</button>${f.id?'<button class="btn d" onclick="del()">Hapus Transaksi</button>':''}</div>`;
- if(foc)$('#fa').focus()}
+ const s=$('#ov .sheet');if(s&&foc)s.scrollTop=0;fitV();if(foc)setTimeout(()=>{const a=$('#fa'),s=$('#ov .sheet');if(!a)return;a.focus({preventScroll:true});if(s)s.scrollTop=0;setTimeout(()=>{if(s&&document.activeElement===a)s.scrollTop=0},800)},380)}
 function closeForm(){$('#ov')?.remove();unlockB()}
 async function save(){sync();const e=!(f.amt>0)?'Nominal harus lebih dari 0':!f.cat?'Pilih kategori':!f.desc.trim()?'Deskripsi wajib diisi':!f.date?'Tanggal wajib diisi':'';if(e)return toast(e,0);
  const b=$('#sb');b.disabled=1;b.textContent='Menyimpan…';
